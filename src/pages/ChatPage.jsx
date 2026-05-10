@@ -19,7 +19,7 @@ export default function ChatPage() {
     const startChatWithUser = async (user) => {
         try {
             console.log("receptor_id que se envía: ", user.id);
-            const response = await fetch("http://127.0.0.1:8000/api/chats/enviar", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/enviar`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

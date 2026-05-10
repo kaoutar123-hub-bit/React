@@ -8,7 +8,7 @@ export function useLikes () {
 
     const like = async (uuid)  => {
         try{
-            const response = await fetch(`http://127.0.0.1:8000/api/publicaciones/${uuid}/like`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/publicaciones/${uuid}/like`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,

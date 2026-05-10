@@ -12,7 +12,7 @@ export default function ChatUserList ({ currentUser, onSelectUser }) {
     const getUserList = async () => {    
         try {
 
-            const response  = await fetch("http://127.0.0.1:8000/api/users", {
+            const response  = await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     "Accept": "application/json"
