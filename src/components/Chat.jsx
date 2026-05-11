@@ -19,6 +19,10 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
 
 
     useEffect(() => {
+        if (!selectedChat?.id) return;
+
+        const chatId = selectedChat.id;
+
         // Cargar mensajes previos desde la API
         const cargarHistorial = async () => {
             try {
