@@ -58,7 +58,7 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
         cargarHistorial();
 
         // Suscripción a Pusher (Canal Privado)
-        echo.private(`chat.${selectedChat.uuid}`)
+        echo.private(`chat.${chatId}`)
             .listen('.nuevo-mensaje', (e) => {
                 setMensajes((prev) => [...prev, e.mensaje]);
             });
