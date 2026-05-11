@@ -6,13 +6,11 @@ import "../indexChat.css";
 
 export default function Chat({ selectedChat, onBack, currentUser }) {
 
-    const API_URL = import.meta.env.VITE_API_URL;
-
-    const {translations, lang, setLang} = useContext(LanguageContext);
-    const language = lang.content.Chat;
-
     const receptor = selectedChat.usuarios?.find(u => u.id !== currentUser.id);
     if (!selectedChat) return null;
+
+    const {translations, lang, setLang} = useContext(LanguageContext);
+    const language = lang.content.login;
 
     const [mensajes, setMensajes] = useState([]);
     const [nuevoMensaje, setNuevoMensaje] = useState("");
@@ -21,14 +19,10 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
 
 
     useEffect(() => {
-        
-        if (!selectedChat?.id) return;
-
-        const chatId = selectedChat.id;
         // Cargar mensajes previos desde la API
         const cargarHistorial = async () => {
             try {
-                const response = await fetch(`${API_URL}/chats/${selectedChat.id}/mensajes`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/${selectedChat.id}/mensajes`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                         'Accept': 'application/json'
@@ -64,27 +58,10 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
         cargarHistorial();
 
         // Suscripción a Pusher (Canal Privado)
-        echo.private(`chat.${chatId}`)
+        echo.private(`chat.${selectedChat.uuid}`)
             .listen('.nuevo-mensaje', (e) => {
-            console.log("Mensaje en vivo recibido:", e.mensaje.uuid);
-
-            setMensajes((prev) => {
-                // Verificamos si el mensaje ya está en la lista (por su UUID)
-                const yaExiste = prev.some(m => m.uuid === e.mensaje.uuid);
-
-                if (yaExiste) {
-                    console.log("Mensaje ignorado: ya existe en la lista");
-                    return prev; // No hacemos nada, devolvemos la lista como estaba
-                }
-
-                // Si no existe, aplicamos la lógica del emisor
-                if (e.mensaje.emisor_id !== currentUser.id) {
-                    return [...prev, e.mensaje];
-                }
-
-                return prev;
+                setMensajes((prev) => [...prev, e.mensaje]);
             });
-        });
 
         return () => {
             echo.leave(`chat.${chatId}`);
@@ -106,7 +83,7 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
         setNuevoMensaje(""); // Limpiamos el input
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/chats/enviar`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/enviar`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -132,16 +109,18 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
     console.log("Chat renderizado");
 
     return ( 
-        <div className="chatbox-container">
+        <div className="main-content chat-container">
+            {/*<HeaderLogged />
+            <Sidebar />*/}
 
-            <div className="chatbox-header"> 
-                <button onClick={onBack}>← {language.back}</button> 
+            <div className="chat-header"> 
+                <button onClick={onBack}>← Volver</button> 
                 {/*<h3>{selectedChat.usuarios[0]?.nickname}</h3> */}
                 <h3>{receptor?.nickname}</h3>
             </div> 
-            <div className="chatbox-messages"> 
+            <div className="chat-messages"> 
                 {mensajes.map(msg => ( 
-                    <div key={msg.uuid} className={`chatbox-msg ${msg.emisor_id === currentUser.id ? 'sent' : 'received'}`}> 
+                    <div key={msg.uuid} className={`msg ${msg.emisor_id === currentUser.id ? 'sent' : 'received'}`}> 
                         {msg.contenido} 
                     </div> 
                     ))} 
@@ -149,9 +128,10 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
             </div> 
             <form onSubmit={handleSend} className="chatbox-input"> 
                 <input value={nuevoMensaje} onChange={(e) => setNuevoMensaje(e.target.value)} /> 
-                <button type="submit">{language.send}</button> 
+                <button type="submit">Enviar</button> 
             </form> 
 
+            {/*<Footer />*/}
         </div> 
     );  
 }
