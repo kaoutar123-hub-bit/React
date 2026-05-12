@@ -28,7 +28,7 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
         // Cargar mensajes previos desde la API
         const cargarHistorial = async () => {
             try {
-                const response = await fetch(`${API_URL}/chats/${selectedChat.id}/mensajes`, {
+                const response = await fetch(`${API_URL}/api/chats/${selectedChat.id}/mensajes`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                         'Accept': 'application/json'

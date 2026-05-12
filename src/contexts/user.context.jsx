@@ -40,7 +40,7 @@ function UserProviderWrapper(props) {
         
         // Llamada a la API de Laravel (BackEnd)
         try {
-            const response = await fetch(`${API_URL}/login`, {
+            const response = await fetch(`${API_URL}/api/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -94,7 +94,7 @@ function UserProviderWrapper(props) {
         //const response = await axios.post("http://localhost:8000/api/signup", {user});
         // Llamada al Back End (Laravel)
         try {
-            const response = await fetch(`${API_URL}/register`, {
+            const response = await fetch(`${API_URL}/api/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -145,7 +145,7 @@ function UserProviderWrapper(props) {
     const resetPassword = async (user) => {
         // Llamada al Backend
         try {
-            const response = await fetch(`${API_URL}/resetpassword`, {
+            const response = await fetch(`${API_URL}/api/resetpassword`, {
                 method: "POST",
                 headers: {"content-Type": "application/json"},
                 body: JSON.stringify(user)
@@ -178,7 +178,7 @@ function UserProviderWrapper(props) {
     // Función asíncrona para devolver los datos de usuario para el HeaderLogged
     const getDataLoggedUser = async () => {
         try {
-            const response = await fetch(`${API_URL}/user`, {
+            const response = await fetch(`${API_URL}/api/user`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -215,7 +215,7 @@ function UserProviderWrapper(props) {
     // Función asíncrona para editar el nickname
     const updateNickname = async (formData) => {
         try {
-            const response = await fetch(`${API_URL}/perfil`, {
+            const response = await fetch(`${API_URL}/api/perfil`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -246,7 +246,7 @@ function UserProviderWrapper(props) {
     // Función asíncrona para editar la contraseña
     const updatePassword = async (password_antigua, password_nueva) => {
         try {
-            const response = await fetch(`${API_URL}/perfil/password`, {
+            const response = await fetch(`${API_URL}/api/perfil/password`, {
                 method: "PUT",
                 headers: {
                     "Authorization": `Bearer ${token}`,
