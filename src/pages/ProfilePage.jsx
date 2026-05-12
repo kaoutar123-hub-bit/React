@@ -117,7 +117,7 @@ export default function ProfilePage() {
                         <div className="profile-card">
                             <div className="profile-picture-section">
                                 <div className="profile-picture-container">
-                                    <img src={user.foto_perfil ? `http://localhost:8000/storage/${user.foto_perfil}` : userPic} />
+                                    <img src={user.foto_perfil ? `${import.meta.env.VITE_API_URL}/storage/${user.foto_perfil}` : userPic} />
                                     <div className="profile-picture-overlay">
                                         <label htmlFor="profile-pic-input" className="change-photo-btn">
                                             <span>📷</span>
