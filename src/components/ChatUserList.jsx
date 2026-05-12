@@ -1,7 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { LanguageContext } from "../contexts/language.context";
 
 
 export default function ChatUserList ({ currentUser, onSelectUser }) {
+
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    const {translations, lang, setLang} = useContext(LanguageContext);
+    const language = lang.content.ChatUserList;
 
     const [users, setUsers] = useState([]);
 
@@ -12,7 +18,7 @@ export default function ChatUserList ({ currentUser, onSelectUser }) {
     const getUserList = async () => {    
         try {
 
-            const response  = await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
+            const response  = await fetch(`${API_URL}/users`, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     "Accept": "application/json"
@@ -50,7 +56,7 @@ export default function ChatUserList ({ currentUser, onSelectUser }) {
     return (
         <>
             <div className="users-list">
-                <h3>Users</h3>
+                <h3>{language.users}</h3>
                 {listUsers()}
             </div>
         </>

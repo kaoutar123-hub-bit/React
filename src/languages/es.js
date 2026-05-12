@@ -74,6 +74,7 @@ const es = {
         settings: 'Configuración',
         profile_edit: 'Editar Perfil',
         nickname: "Nombre de usuario",
+        save: "Guardar",
         cancel: "Cancelar",
         change_password: 'Cambiar Contraseña',
         terms_conditions: 'Términos y Condiciones',
@@ -86,6 +87,26 @@ const es = {
         password_mismatch: "Las contraseñas no coinciden",
         password_too_short: "Contraseña demasiado corta",
         password_updated: "Contraseña actualizada"
+    },
+
+    ChatPage: {
+        chats: "Chats"
+    },
+
+    Chat: {
+        back: "Volver",
+        send: "Enviar"
+    },
+
+    ConversacionesChat: {
+        conversations: "Conversaciones",
+        loading_conversations: "Cargando conversaciones...",
+        no_conversations_yet: "Aún no hay conversaciones",
+        no_messages_yet: "No hay mensages todavía"
+    },
+
+    ChatUserList: {
+        users: "Usuarios"
     }
 };
 

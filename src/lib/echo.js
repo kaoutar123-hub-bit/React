@@ -9,7 +9,7 @@ const echo = new Echo({
     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
     forceTLS: true,
     // Como usamos PrivateChannels, necesitamos pasar el token de Sanctum
-    authEndpoint: '${import.meta.env.VITE_API_URL}/broadcasting/auth', 
+    authEndpoint: 'http://127.0.0.1:8000/api/broadcasting/auth', 
     auth: {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,

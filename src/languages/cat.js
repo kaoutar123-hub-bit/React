@@ -74,6 +74,7 @@ const cat = {
         settings: 'Configuració',
         profile_edit: 'Editar Perfil',
         nickname: "Nom d'usuari",
+        save: "Guardar",
         cancel: "Cancel·lar",
         change_password: 'Canviar Contrasenya',
         terms_conditions: 'Termes i Condicions',
@@ -86,6 +87,26 @@ const cat = {
         password_mismatch: "Les contrasenyes no coincideixen",
         password_too_short: "Contrasenya massa curta",
         password_updated: "Contrasenya actualitzada"
+    },
+
+    ChatPage: {
+        chats: "Chats"
+    },
+
+    Chat: {
+        back: "Enrere",
+        send: "Envia"
+    },
+
+    ConversacionesChat: {
+        conversations: "Converses",
+        loading_conversations: "Carregant converses...",
+        no_conversations_yet: "Encara no n´hi han converses",
+        no_messages_yet: "No hi ha missatges encara"
+    },
+
+    ChatUserList: {
+        users: "Usuaris"
     }
 };
 

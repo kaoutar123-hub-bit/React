@@ -2,15 +2,21 @@ import { useState, useContext } from 'react';
 import { UserContext } from "../contexts/user.context.jsx";
 import "../indexChat.css";
 import "../indexLogged.css";
-import MessagesChat from '../components/MessagesChat.jsx';
+import ConversacionesChat from '../components/ConversacionesChat.jsx';
 import Chat from '../components/Chat.jsx';
 import Footer from '../components/Footer.jsx';
 import HeaderLogged from "../components/HeaderLogged.jsx";
 import Sidebar from '../components/Sidebar.jsx';
 import ChatUserList from "../components/ChatUserList";
+import { LanguageContext } from "../contexts/language.context.jsx";
 
 
 export default function ChatPage() {
+
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    const {translations, lang, setLang} = useContext(LanguageContext);
+    const language = lang.content.ChatPage;
 
     const { user } = useContext(UserContext);
     const [chatSeleccionado, setChatSeleccionado] = useState(null);
@@ -19,7 +25,7 @@ export default function ChatPage() {
     const startChatWithUser = async (user) => {
         try {
             console.log("receptor_id que se envía: ", user.id);
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/enviar`, {
+            const response = await fetch(`${API_URL}/chats/enviar`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -50,32 +56,44 @@ export default function ChatPage() {
     }
 
     return (
-        <div className="app-layout">
-            <HeaderLogged />
+        <>
+            <div className="app-layout">
+                <HeaderLogged />
 
-            <div className="container">
-                <Sidebar />
+                <div className="chat-layout">
+                    <Sidebar />
 
-                <div className="main">
-                    <ChatUserList 
-                            currentUser={user}
-                            onSelectUser={startChatWithUser}
-                    />
+                    <div className="chat-left-column">
+                        <div className="chat-left-users">
+                            <ChatUserList 
+                                    currentUser={user}
+                                    onSelectUser={startChatWithUser}
+                            />
+                        </div>
 
-                    {!chatSeleccionado ? (
-                        <MessagesChat onSelectChat={(chat) => setChatSeleccionado(chat)} currentUser={user} />
-                    ) : (
-                        <Chat
-                            selectedChat={chatSeleccionado}
-                            currentUser={user}
-                            onBack={() => setChatSeleccionado(null)}
-                        />
-                    )}
+                        <div className="chat-left-chats">
+                            <ConversacionesChat onSelectChat={(chat) => setChatSeleccionado(chat)} currentUser={user} />
+                        </div>
+                    </div>
+
+                    <div className="chat-right-column">
+                        {chatSeleccionado ? (
+                            <Chat
+                                selectedChat={chatSeleccionado}
+                                currentUser={user}
+                                onBack={() => setChatSeleccionado(null)}
+                            />
+                        ) : (
+                            <div className="chat-placeholder">
+                                <p>{language.chats}</p>
+                            </div>
+                        )}
+                    </div>
+
                 </div>
 
+                <Footer />
             </div>
-
-            <Footer />
-        </div>
+        </>
     );
 }
