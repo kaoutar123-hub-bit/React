@@ -18,7 +18,7 @@ export default function ChatUserList ({ currentUser, onSelectUser }) {
     const getUserList = async () => {    
         try {
 
-            const response  = await fetch(`${API_URL}/api/users`, {
+            const response  = await fetch(`${API_URL}/users`, {
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("token")}`,
                     "Accept": "application/json"
