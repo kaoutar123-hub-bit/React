@@ -5,7 +5,7 @@ import babel from '@rolldown/plugin-babel'
 // https://vite.dev/config/
 export default defineConfig({
   server: {
-    host: "127.0.0.1",
+    host: `${import.meta.env.VITE_API_URL}`,
     port: 5173
   },
   
