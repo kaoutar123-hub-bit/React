@@ -65,7 +65,7 @@ export default function ConversacionesChat({ onSelectChat, currentUser }) {
                                 className="message-item"
                                 onClick={() => onSelectChat(chat)}
                             >
-                                <img src={receptor.foto_perfil ? `${import.meta.env.VITE_API_URL}/storage/${receptor.foto_perfil}` : "/images/user.png"} alt="avatar" className="message-avatar" />
+                                <img src={receptor.foto_perfil ? `${import.meta.env.VITE_API_URL}/api/storage/${receptor.foto_perfil}` : "/images/user.png"} alt="avatar" className="message-avatar" />
                                 <div className="message-info">
                                     {/*<h4>{chat.usuarios[0]?.nickname}</h4>*/}
                                     <h4>{receptor?.nickname}</h4>
