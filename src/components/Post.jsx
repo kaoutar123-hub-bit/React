@@ -110,7 +110,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
         <>
             {editPost ? (
                 <div className='post-content'>
-                    <img src={`${import.meta.env.VITE_API_URL}/storage/${post.imagen}`} />
+                    <img src={`${import.meta.env.VITE_API_URL}/api/storage/${post.imagen}`} />
                     <textarea
                         value={editPostContent}
                         onChange={(e) => setEditPostContent(e.target.value)}
@@ -124,7 +124,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
                     <p className={styles.postText}>{post.contenido}</p>
 
                     {post.imagen && (
-                        <img src={`${import.meta.env.VITE_API_URL}/storage/${post.imagen}`} />
+                        <img src={`${import.meta.env.VITE_API_URL}/api/storage/${post.imagen}`} />
                     )}
                 </div>
 
