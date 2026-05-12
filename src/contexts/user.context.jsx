@@ -176,7 +176,7 @@ function UserProviderWrapper(props) {
     // Función asíncrona para devolver los datos de usuario para el HeaderLogged
     const getDataLoggedUser = async () => {
         try {
-            const response = await fetch(`${API_URL}/user`, {
+            const response = await fetch(`${API_URL}/api/user`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`,
