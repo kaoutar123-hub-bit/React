@@ -106,7 +106,7 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
         setNuevoMensaje(""); // Limpiamos el input
 
         try {
-            const response = await fetch(`http://127.0.0.1:8000/chats/enviar`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/enviar`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
