@@ -13,10 +13,10 @@ const es = {
         acceptTerms: "Acepto los términos y condiciones",
         signUpMVMood: "Registrate en MVMood",
         nickname: "Nombre de usuario",
-        email:"email",
-        password: "contraseña",
+        email: "Email",
+        password: "Contraseña",
         repeatPassword: "Repite contraseña",
-        signUp: "Registrate"
+        signUp: "Regístrate"
     },
 
     forgotPassword: {
@@ -72,13 +72,13 @@ const es = {
 
     ProfilePage: {
         settings: 'Configuración',
-        profile_edit: 'Editar Perfil',
+        profile_edit: 'Editar perfil',
         nickname: "Nombre de usuario",
         save: "Guardar",
         cancel: "Cancelar",
-        change_password: 'Cambiar Contraseña',
-        terms_conditions: 'Términos y Condiciones',
-        delete_account: 'Eliminar Cuenta',
+        change_password: 'Cambiar contraseña',
+        terms_conditions: 'Términos y condiciones',
+        delete_account: 'Eliminar cuenta',
         current_password: "Contraseña actual",
         new_password: "Nueva contraseña",
         repeat_password: "Repite contraseña",

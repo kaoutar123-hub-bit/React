@@ -33,9 +33,6 @@ export default function Header ({ children }) {
         return () => document.body.removeEventListener('click', closeLanguageMenu);
     }, []);
 
-    /*useEffect(() => {
-        getDataLoggedUser();
-    }, []);*/
 
     const changeLanguage = () => {
         setShowLanguageMenu(!showLanguageMenu);
@@ -53,7 +50,7 @@ export default function Header ({ children }) {
 
                 <div className={`${styles.dataLoggedContainer} dataLoggedContainer`}>
                         {/*<p>{localStorage.getItem("nickname")}</p>*/}
-                        <Link className={styles.linkHeaderNickImg} to="/profile"><img src={user.foto_perfil ? `${import.meta.env.VITE_API_URL}/api/storage/${user.foto_perfil}`: userPic} alt="FotoPerfil" className={styles.headerProfileImg} />
+                        <Link className={styles.linkHeaderNickImg} to="/profile"><img src={user.foto_perfil ? `${import.meta.env.VITE_API_URL}/storage/${user.foto_perfil}`: userPic} alt="FotoPerfil" className={styles.headerProfileImg} />
                         <p className={styles.dataLoggedUser}>{user.nickname}</p></Link>
                 </div>
 
@@ -68,4 +65,3 @@ export default function Header ({ children }) {
         </>
     );
 }
-//                <div className="headerContent">

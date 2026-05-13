@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import HeaderLogged from '../components/HeaderLogged';
 import Sidebar from '../components/Sidebar';
+import Button from "../components/Button";
 import '../indexLogged.css';
 import Footer from '../components/Footer';
 import TermConditions from '../components/TermConditions';
@@ -55,12 +56,6 @@ export default function ProfilePage() {
 
         const data = await updateNickname(formData);
 
-        /*if (data?.nickname) {
-            setNickname(data.nickname);
-
-            setUser(prev => ({...prev, nickname: data.nickname}));
-        }*/
-
         setIsEditingNickname(false);
     };
 
@@ -69,39 +64,26 @@ export default function ProfilePage() {
         setPasswords((prev) => ({ ...prev, [name]: value }));
     };
 
-    /*const handlePasswordSubmit = (event) => {
-        event.preventDefault();
-        if (!passwords.current || !passwords.next || !passwords.confirm) {
-            setPasswordError(language.fill_all_fields);
-            setPasswordMessage('');
-            return;
-        }
-
-        if (passwords.next !== passwords.confirm) {
-            setPasswordError(language.password_mismatch);
-            setPasswordMessage('');
-            return;
-        }
-
-        if (passwords.next.length < 8) {
-            setPasswordError(language.password_too_short);
-            setPasswordMessage('');
-            return;
-        }
-
-        setPasswordError('');
-        setPasswordMessage(language.password_updated);
-        setPasswords({ current: '', next: '', confirm: '' });
-    };*/
 
     const handlePasswordChange = async (e) => {
         e.preventDefault();
+        setPasswordError("");
+        setPasswordMessage("");
 
-        const password_antigua = passwords.current.trim();
-        const password_nueva = passwords.next.trim();
-        const password_nueva_confirm = passwords.confirm.trim();
+        const data = await updatePassword(passwords.current, passwords.next, passwords.confirm);
 
-        const data = await updatePassword(password_antigua, password_nueva);
+        if (data?.error) {
+            setPasswordError(data.error);
+        }
+
+        else if (data) {
+            setPasswordMessage(language.password_updated);
+            setPasswords({ current: '', next: '', confirm: '' });
+        }
+        else {
+            setPasswordError('Error por editar y pasar diccionario');
+        }
+
     }
 
     return (
@@ -117,12 +99,13 @@ export default function ProfilePage() {
                         <div className="profile-card">
                             <div className="profile-picture-section">
                                 <div className="profile-picture-container">
-                                    <img src={user.foto_perfil ? `${import.meta.env.VITE_API_URL}/api/storage/${user.foto_perfil}` : userPic} />
+                                    <img className="profile-picture" src={user.foto_perfil ? `${import.meta.env.VITE_API_URL}/api/storage/${user.foto_perfil}` : userPic} />
                                     <div className="profile-picture-overlay">
                                         <label htmlFor="profile-pic-input" className="change-photo-btn">
                                             <span>📷</span>
                                         </label>
-                                        <input 
+                                        <input
+                                            className='imputs'
                                             id="profile-pic-input"
                                             type="file" 
                                             accept="image/*" 
@@ -150,12 +133,14 @@ export default function ProfilePage() {
                                                 value={nickname}
                                                 maxLength={255}
                                                 required
-                                                className="nick-input"
+                                                className="imputs"
                                                 onChange={(e) => setNickname(e.target.value)}
                                             />
                                             <div className="form-actions">
-                                                <button type="submit" className="save-btn">Save</button>
-                                                <button type="button" onClick={() => setIsEditingNickname(false)} className="cancel-btn">{language.cancel}</button>
+                                                <Button>{language.save}</Button>
+                                                <Button className="buttonCancel" onClick={() => setIsEditingNickname(false)}>{language.cancel}</Button>
+                                                {/*<button type="submit" className="save-btn">Save</button>
+                                                <button type="button" onClick={() => setIsEditingNickname(false)} className="cancel-btn">{language.cancel}</button>*/}
                                             </div>
                                         </form>
                                     )}
@@ -188,6 +173,7 @@ export default function ProfilePage() {
                                     <div className="form-group">
                                         <label htmlFor="current">{language.current_password}</label>
                                         <input
+                                            className='imputs'
                                             id="current"
                                             name="current"
                                             type="password"
@@ -199,6 +185,7 @@ export default function ProfilePage() {
                                     <div className="form-group">
                                         <label htmlFor="next">{language.new_password}</label>
                                         <input
+                                            className='imputs'
                                             id="next"
                                             name="next"
                                             type="password"
@@ -210,6 +197,7 @@ export default function ProfilePage() {
                                     <div className="form-group">
                                         <label htmlFor="confirm">{language.repeat_password}</label>
                                         <input
+                                            className='imputs'
                                             id="confirm"
                                             name="confirm"
                                             type="password"
@@ -223,10 +211,12 @@ export default function ProfilePage() {
                                     {passwordMessage && <p className="message">{passwordMessage}</p>}
 
                                     <div className="form-actions">
-                                        <button type="submit" className="save-btn">{language.confirm_password}</button>
-                                        <button type="button" className="cancel-btn" onClick={() => setShowPasswordForm(false)}>
+                                        {/*<button type="submit" className="save-btn">{language.confirm_password}</button>*/}
+                                        <Button>{language.confirm_password}</Button>
+                                        <Button className="buttonCancel" onClick={() => setShowPasswordForm(false)}>{language.cancel}</Button>
+                                        {/*<button type="button" className="cancel-btn" onClick={() => setShowPasswordForm(false)}>
                                             {language.cancel}
-                                        </button>
+                                        </button>*/}                                
                                     </div>
 
                                 </form>
@@ -269,7 +259,7 @@ export default function ProfilePage() {
                                     </button>
                                 </div>
                                 <div className="terms-content">
-                                    <TermConditions></TermConditions>
+                                    <TermConditions showCheckbox={false}></TermConditions>
                                 </div>
                             </div>
                         </div>

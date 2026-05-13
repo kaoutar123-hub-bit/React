@@ -39,7 +39,7 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
                 // Los invertimos para que el más reciente esté abajo
                 //setMensajes(data.data.reverse());
 
-                console.log("Historial recibido: ", data);
+                //console.log("Historial recibido: ", data);
 
                 if (!response.ok) {
                     console.error("Error HTTP: ", response.status, data);
@@ -106,7 +106,7 @@ export default function Chat({ selectedChat, onBack, currentUser }) {
         setNuevoMensaje(""); // Limpiamos el input
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chats/enviar`, {
+            const response = await fetch(`http://127.0.0.1:8000/chats/enviar`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
