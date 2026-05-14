@@ -12,7 +12,7 @@ function UserProviderWrapper(props) {
     const API_URL = import.meta.env.VITE_API_URL;
 
     const [user, setUser] = useState({
-        id:null,
+        id: null,
         email: "",
         password: "",
         repeatPassword: "",
@@ -54,27 +54,40 @@ function UserProviderWrapper(props) {
             });
 
             const data = await response.json();
-            console.log("Login correcto: ", data); //Recibe el objeto con sus atributos
-            setMessage("Login correcto: ", data);
 
             if (!response.ok) {
                 const errorResponse = data.message;
-                console.log(errorResponse);
-                throw new Error("Error en el login: ", errorResponse);
-                console.error("Error en el login: ", errorResponse);
-                setError("Error en el login: ", errorResponse);
+                console.error(`Error del servidor en el login: ${errorResponse}`);
+                setError(`Error del servidor en el login: ${errorResponse}`);
+                //throw new Error("Error en el login: ", errorResponse);
 
-            } else {
-                localStorage.setItem("token", data.token);
-                setToken(data.token);
+                setUser({
+                    id:"",
+                    email: "",
+                    password: "",
+                    repeatPassword: "",
+                    nickname: ""
+                });
 
-                localStorage.setItem("nickname", data.user.nickname);
-                window.location.replace("/home");
-            }
+                return;
+
+            } 
+
+            //console.log("Login correcto: ", data); //Recibe el objeto con sus atributos
+            setMessage(`Login correcto: ${data.user.nickname}`);
+
+            localStorage.setItem("token", data.token);
+            //console.log(`Token: ${data.token}`);
+            setToken(data.token);
+
+            localStorage.setItem("nickname", data.user.nickname);
+            //<Link to="/home" />
+            //window.location.replace("/home");
+            
             
         } catch (err) {
-            //console.error("Error en la petición login al servidor: ", err.message);
-            //setError(err);
+            console.error(`Error de red o conexión en la petición login al servidor: ${err.message}`);
+            setError(`Error de red o conexión en la petición login al servidor: ${err.message}`);
 
             setUser({
                 id:"",
@@ -109,26 +122,35 @@ function UserProviderWrapper(props) {
             });
 
             const data = await response.json();
-            console.log("Registro correcto: ",  data);
-            setMessage("Registro correcto: ",  data);
 
             if (!response.ok) {
-                const errorResponse = data.messsage;
-                throw new Error("Error en el registro: ", errorResponse.message);
-                console.error("Error en el registro: ", errorResponse.message);
-                setError("Error en el registro: ", errorResponse.message);
+                const errorResponse = data.message;                
+                console.error(`Error en el registro: ${errorResponse}`);
+                setError(`Error en el registro: ${errorResponse}`);
+                //throw new Error("Error en el registro: ", errorResponse.message);
+
+                setUser({
+                    id:"",
+                    nickname: "",
+                    email: "",
+                    password: "",
+                    repeatPassword: ""
+                });
+
+                return;
             }
 
-            else {
-                window.location.replace("/");
-                //<Navigate to={"/"} replace />
-                //navigate("/");
-            }
+            console.log("Registro correcto");
+            setMessage("Registro correcto");
+            <Link to="/" />
+            //window.location.replace("/");
+            //<Navigate to={"/"} replace />
+            //navigate("/");
 
         
         } catch (err) {
-            console.error("Error en la petición al servidor: ", err.message);
-            setError(err);
+            console.error(`Error en la petición al servidor: ${err.message}`);
+            setError(`Error en la petición al servidor: ${err.message}`);
 
             setUser({
                 id:"",
@@ -147,23 +169,34 @@ function UserProviderWrapper(props) {
         try {
             const response = await fetch(`${API_URL}/api/resetpassword`, {
                 method: "POST",
-                headers: {"content-Type": "application/json"},
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(user)
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                const errorResponse = await response.json();
-                throw new Error("Error al actualizar la contraseña: ", errorResponse.message);
-                setError("Error al actualizar la contraseña: ", errorResponse.message);
+                const errorResponse = data.message;
+                console.error(`Error al actualizar la contraseña: ${errorResponse}`);
+                setError(`Error al actualizar la contraseña: ${errorResponse}`);
+                //throw new Error("Error al actualizar la contraseña: ", errorResponse.message);
+
+                setUser({
+                    id:"",
+                    nickname: "",
+                    email: "",
+                    password: "",
+                    repeatPassword: ""
+                });
+                return;
             }
 
-            const data = response.json();
-            console.log("Contraseña actualizada: ", data);
-            setMessage("Contraseña actualizada: ", data);
+            console.log("Contraseña actualizada correctamente");
+            setMessage("Contraseña actualizada correctamente");
 
         } catch (err) {
-            console.error("Error en la petición al servidor: ", err.message);
-            setError(err);
+            console.error(`Error en la petición al servidor: ${err.message}`);
+            setError(`Error en la petición al servidor: ${err.message}`);
 
             setUser({
                 id:"",
@@ -190,11 +223,13 @@ function UserProviderWrapper(props) {
             const data = await response.json();
 
             if (!response.ok) {
-                setError("Error al recibir datos de usuario: ", errorResponse.message);
-                throw new Error("Error al recibir datos de usuario: ", errorResponse.message);
-            }
+                const errorResponse = data.message
+                console.error(`Error al recibir datos de usuario: ${errorResponse}`);
+                setError(`Error al recibir datos de usuario: ${errorResponse}`);
+                //throw new Error("Error al recibir datos de usuario: ", errorResponse.message);
 
-            console.log("Datos de usuario recibidos correctamente");
+                return;
+            }
 
             setUser({
                 id: data.id,
@@ -203,11 +238,13 @@ function UserProviderWrapper(props) {
                 foto_perfil: data.foto_perfil
             });
 
+            console.log("Datos de usuario recibidos correctamente");
+
             return data;
 
         } catch (err) {
-            console.error("Error en la petición al servidor: ", err.message);
-            setError(err);
+            console.error(`Error en la petición al servidor: ${err.message}`);
+            setError(`Error en la petición al servidor: ${err.message}`);
         }
     }
 
@@ -228,18 +265,22 @@ function UserProviderWrapper(props) {
             const data = await response.json();
 
             if (!response.ok) {
-                console.error("Error al recibir el Nickname actualizado: ", data.message);
-                setError("Error al recibir el Nickname actualizado: ", errorResponse.message);
-                throw new Error("Error al recibir el Nickname actualizado");
+                const errorResponse = data.message;
+                console.error(`Error al recibir el Nickname actualizado: ${errorResponse}`);
+                setError(`Error al recibir el Nickname actualizado: ${errorResponse}`);
+                //throw new Error("Error al recibir el Nickname actualizado");
+
+                return;
             }
 
-            console.log("Nickname actualizado recibido correctamente");
-            setUser(getDataLoggedUser());
+            console.log("Nickname actualizado correctamente");
+            //setUser(getDataLoggedUser());
+            await getDataLoggedUser();
             return data;
 
         } catch (err) {
-            console.error("Error en la petición al servidor: ", err.message);
-            setError(err.message);
+            console.error(`Error en la petición al servidor: ${err.message}`);
+            setError(`Error en la petición al servidor: ${err.message}`);
         }
     }
 
@@ -259,19 +300,21 @@ function UserProviderWrapper(props) {
             const data = await response.json();
 
             if (!response.ok) {
-                console.error("Error al cambiar la constraseña: ", data.message);
-                setError("Error al recibir los datos para el cambio de constraseña: ", data.message);
+                const errorResponse = data.message;
+                console.error(`Error al cambiar la constraseña: ${errorResponse}`);
+                setError(`Error al cambiar la constraseña: ${errorResponse}`);
                 //throw new Error("Error al recibir los datos para el cambio de constraseña");
+
+                return {error: errorResponse};
             }
 
             console.log("Contraseña actualizada correctamente");
             await getDataLoggedUser();
             return data;
 
-
         } catch (err) {
-            console.error("Error en la petición al servidor: ", err.message);
-            setError(err.message);
+            console.error(`Error en la petición al servidor: ${err.message}`);
+            setError(`Error en la petición al servidor: ${err.message}`);
         }
     }
 
