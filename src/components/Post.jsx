@@ -1,6 +1,6 @@
 import '../indexLogged.css';
 import styles from "../styles/Post.module.css";
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Button from './Button';
 import { LanguageContext } from '../contexts/language.context';
 import { UserContext } from "../contexts/user.context";
@@ -24,7 +24,18 @@ export default function Post({ post, updated, deleted, del, update, publicacione
     const [contenido, setContenido] = useState("");
     const [newImagen, setNewImagen] = useState(null);
     const [urlImagen, setUrlImagen] = useState(null);
+    const [showMenu, setShowMenu] = useState(false);
 
+
+    useEffect (() => {
+        const closeMenu = (e) => {
+            if (!e.target.closest('.menu-container')) {
+                setShowMenu(false);
+            }
+        };
+        document.addEventListener('click', closeMenu);
+        return () => document.removeEventListener('click', closeMenu);
+    }, []);
 
     // Guardar editar POST
     const handleSave = async (id) => {
@@ -118,7 +129,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
                     {urlImagen ?
                         <img src={urlImagen} alt="Url Imagen" className="attachUrlImagen" />
                     :
-                        post.imagen && <img src={`${API_URL}/api/storage/${post.imagen}`} alt="Post Imagen" />
+                        post.imagen && <img src={`${API_URL}/storage/${post.imagen}`} alt="Post Imagen" />
                     }
 
                     <textarea
@@ -135,7 +146,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
             ) : (
                 <div className="post-content">
                     <Link className={styles.linkPostNickImg} to="/profile">
-                        <img src={post.user.foto_perfil ? `${API_URL}/api/storage/${post.user.foto_perfil}`: userPic}
+                        <img src={post.user.foto_perfil ? `${API_URL}/storage/${post.user.foto_perfil}`: userPic}
                         alt="FotoPerfil"
                         className={styles.postProfileImg} />
 
@@ -144,7 +155,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
                     <p className={styles.postText}>{post.contenido}</p>
 
                     {post.imagen && (
-                        <img src={`${API_URL}/api/storage/${post.imagen}`} />
+                        <img src={`${API_URL}/storage/${post.imagen}`} />
                     )}
                 </div>
 
@@ -185,7 +196,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
                             commentList.map((comment) => (
                                 <div key={comment.uuid} className="comment-item">
                                     <div className='comment-nickname'>
-                                        <Link className={styles.linkPostNickImg} to="/profile"><img src={user.foto_perfil ? `${API_URL}/api/storage/${user.foto_perfil}`: userPic}
+                                        <Link className={styles.linkPostNickImg} to="/profile"><img src={user.foto_perfil ? `${API_URL}/storage/${user.foto_perfil}`: userPic}
                                             alt="FotoPerfil"
                                             className={styles.postProfileImg} />
                                         </Link>
@@ -216,14 +227,16 @@ export default function Post({ post, updated, deleted, del, update, publicacione
                         className="menu-btn"
                         title="More options"
                         onClick={(event) => {
-                            const next = event.currentTarget.nextElementSibling;
-                            next?.classList.toggle('show');
+                            setShowMenu(prev => !prev)
+                            /*const next = event.currentTarget.nextElementSibling;
+                            next?.classList.toggle('show');*/
                         }}
                     >
                         ⋮
                     </button>
+                
+                {showMenu && (
 
-                    {/* Menú opciones POSTS */}
                     <div className="menu-options">
                         {(publicaciones?.session?.rol === 'admin' || post.idUsuario === publicaciones?.session?.id) && (
                             
@@ -231,8 +244,9 @@ export default function Post({ post, updated, deleted, del, update, publicacione
                             <button
                                 className="danger"
                                 onClick={(e) => {
-                                    const next = e.currentTarget.nextElementSibling;
-                                    next?.removeAttribute('show');
+                                    setShowMenu(false);
+                                    /*const next = e.currentTarget.nextElementSibling;
+                                    next?.removeAttribute('show');*/
                                     if (confirm(`${language.sure_delete_post}`)) {
                                         del(post.id);
                                         deleted();
@@ -245,13 +259,13 @@ export default function Post({ post, updated, deleted, del, update, publicacione
         
                         {/* Botón editar POST */}
 
-                        <Button onClick={() => {setEditPost(true); setEditPostContent(post.contenido)}}>
+                        <Button onClick={() => {setShowMenu(false); setEditPost(true); setEditPostContent(post.contenido)}}>
                             {language.edit}
                         </Button>
                     
-                        {/* Botón reportar POST */}
-                        <button>{language.report}</button>
+                    
                     </div>
+                )}    
                 </div>
             </div>
         </>
