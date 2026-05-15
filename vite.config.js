@@ -7,15 +7,9 @@ export default defineConfig({
     port: 5173
   },
   plugins: [
-    react() // Quitamos el plugin de babel/compiler para asegurar estabilidad
+    react()
   ],
-  define: {
-    // Esto evita que librerías antiguas busquen variables de Node.js
-    'global': 'window',
-  },
-  build: {
-    commonjsOptions: {
-      transformMixedEsModules: true, // Crucial para que Pusher y Echo se lleven bien
-    }
+  optimizeDeps: {
+    include: ['laravel-echo', 'pusher-js']
   }
 })
