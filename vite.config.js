@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
-import react, { reactCompilerPreset } from '@vitejs/plugin-react'
-import babel from '@rolldown/plugin-babel'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   server: {
@@ -8,15 +7,15 @@ export default defineConfig({
     port: 5173
   },
   plugins: [
-    react(),
-    babel({ presets: [reactCompilerPreset()] })
+    react() // Quitamos el plugin de babel/compiler para asegurar estabilidad
   ],
-  optimizeDeps: {
-    include: ['laravel-echo', 'pusher-js']
+  define: {
+    // Esto evita que librerías antiguas busquen variables de Node.js
+    'global': 'window',
   },
   build: {
     commonjsOptions: {
-      include: [/laravel-echo/, /pusher-js/, /node_modules/]
+      transformMixedEsModules: true, // Crucial para que Pusher y Echo se lleven bien
     }
   }
 })

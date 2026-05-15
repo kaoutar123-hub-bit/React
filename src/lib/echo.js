@@ -1,5 +1,6 @@
 import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
+// Cambiamos esta línea:
+import Pusher from 'pusher-js/dist/web/pusher';
 
 window.Pusher = Pusher;
 
