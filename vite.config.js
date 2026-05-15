@@ -11,4 +11,12 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
+  optimizeDeps: {
+    include: ['laravel-echo', 'pusher-js']
+  },
+  build: {
+    commonjsOptions: {
+      include: [/laravel-echo/, /pusher-js/, /node_modules/]
+    }
+  }
 })
