@@ -15,4 +15,9 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
+  resolve: {
+    alias: {
+      'laravel-echo': 'laravel-echo/dist/echo.js'
+    }
+  }
 })
