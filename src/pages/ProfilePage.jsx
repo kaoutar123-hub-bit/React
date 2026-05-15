@@ -12,10 +12,12 @@ import userPic from "../assets/settingsprofile/user.png";
 
 export default function ProfilePage() {
 
-    const {user, setUser, getDataLoggedUser, updateNickname, updatePassword} = useContext(UserContext);
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    const {user, setUser, getDataLoggedUser, updateNickname, updatePassword, error, setError, token} = useContext(UserContext);
 
     const {translations, lang, setLang} = useContext(LanguageContext);
-    const language = lang.content.ProfilePage;
+    const language = lang.ProfilePage;
 
     const [profilePic, setProfilePic] = useState({userPic});
     const [nickname, setNickname] = useState("");
@@ -86,12 +88,49 @@ export default function ProfilePage() {
 
     }
 
+    const deleteAccount = async () => {
+        try {
+            const response = await fetch(`${API_URL}/api/perfil/delete`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    //"Content-Type": "application/json",
+                    //"Accept": "application/json"
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                const errorResponse = data.message;
+                console.error(`${language.errorDeleteUser} ${errorResponse}`);
+                setPasswordError(`${language.errorDeleteUser} ${errorResponse}`);
+
+                return;
+            }
+
+            console.log(`${language.okDeleteUser}`);
+            localStorage.removeItem("token");
+            localStorage.removeItem("language");
+            localStorage.removeItem("theme");
+            localStorage.removeItem("nickname");
+            localStorage.removeItem("pusherTransportTLS");
+            window.location.replace("/");
+
+        } catch (err) {
+            console.error(`${language.errorServerConnectionProfile} ${err.message}`);
+            setError(`${language.errorServerConnectionProfile} ${err.message}`);
+        }
+    }
+
+
     return (
         <>
             <HeaderLogged />
             <div className="container">
                 <Sidebar />
                 <div className="main">
+                    {error && (<p className="error">{error}</p>)}
                     <h2>{language.settings}</h2>
 
                     <div className="settings-section profile-section">
@@ -99,7 +138,7 @@ export default function ProfilePage() {
                         <div className="profile-card">
                             <div className="profile-picture-section">
                                 <div className="profile-picture-container">
-                                    <img className="profile-picture" src={user.foto_perfil ? `${import.meta.env.VITE_API_URL}/storage/${user.foto_perfil}` : userPic} />
+                                    <img className="profile-picture" src={user.foto_perfil ? `${import.meta.env.VITE_API_URL}/api/storage/${user.foto_perfil}` : userPic} />
                                     <div className="profile-picture-overlay">
                                         <label htmlFor="profile-pic-input" className="change-photo-btn">
                                             <span>📷</span>
@@ -138,7 +177,7 @@ export default function ProfilePage() {
                                             />
                                             <div className="form-actions">
                                                 <Button>{language.save}</Button>
-                                                <Button className="buttonCancel" onClick={() => setIsEditingNickname(false)}>{language.cancel}</Button>
+                                                <Button className="buttonCancel" onClick={() => {setIsEditingNickname(false); setNickname(user.nickname)}}>{language.cancel} </Button>
                                                 {/*<button type="submit" className="save-btn">Save</button>
                                                 <button type="button" onClick={() => setIsEditingNickname(false)} className="cancel-btn">{language.cancel}</button>*/}
                                             </div>
@@ -156,7 +195,7 @@ export default function ProfilePage() {
 
                         <button className="settings-button" onClick={() => setShowTerms(true)}>{language.terms_conditions}</button>
                         <button className="settings-button" onClick={() => setShowHelp(true)}>Para borrar o añadir otra cosa</button>
-                        <button className="settings-button delete">{language.delete_account}</button>
+                        <button className="settings-button delete" onClick={deleteAccount}>{language.delete_account}</button>
                     </div>
 
                     {showPasswordForm && (

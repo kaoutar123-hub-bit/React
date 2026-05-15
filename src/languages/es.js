@@ -71,6 +71,7 @@ const es = {
     },
 
     ProfilePage: {
+        errorServerConnectionProfile: "Error de conexión con el servidor: ",
         settings: 'Configuración',
         profile_edit: 'Editar perfil',
         nickname: "Nombre de usuario",
@@ -86,7 +87,9 @@ const es = {
         fill_all_fields: "Deben rellenar todos los campos",
         password_mismatch: "Las contraseñas no coinciden",
         password_too_short: "Contraseña demasiado corta",
-        password_updated: "Contraseña actualizada"
+        password_updated: "Contraseña actualizada",
+        errorDeleteUser: "Error al eliminar cuenta: ",
+        okDeleteUser: "Cuenta eliminada correctamente"
     },
 
     ChatPage: {
@@ -113,6 +116,58 @@ const es = {
         english: "Inglés",
         spanish: "Español",
         catalan: "Catalán"
+    },
+
+    UserFunctions: {
+        errorServerConnection: "Error al conectar con el servidor: ",
+        errorServerLogin: "Error del servidor en el login: ",
+        okLogin: "Login correcto: ",
+        errorServerRegister: "Error en el registro: ",
+        okRegister: "Registro correcto",
+        errorServerResetPassword: "Error al actualizar la contraseña: ",
+        okResetPassword: "Contraseña actualizada correctamente",
+        errorServerGetDataUserLogged: "Error al recibir datos de usuario: ",
+        okGetDataUserLogged: "Datos de usuario recibidos correctamente",
+        errorServerUpdateNickname: "Error al recibir el Nickname actualizado: ",
+        okUpdateNickname: "Nickname actualizado correctamente",
+        errorServerUpdatePassword: "Error al actualizar la constraseña: ",
+        okUpdatePassword: "Contraseña actualizada correctamente"
+    },
+
+    errorPosts: {
+        errorServerConnectionPosts: "Error al conectar con el servidor: ",
+        errorServerLoadPosts: "Error al cargar los POSTS: ",
+        okLoadPosts: "POSTS cargados correctamente",
+        errorServerCreatePost: "Error en la creación del POST: ",
+        okCreatePost: "Publicación creada correctamente",
+        errorServerDeletePost: "Error eliminando el POST: ",
+        okDeletePost: "Publicación eliminada correctamente",
+        errorServerUpdatePost: "Error en la edición del POST: ",
+        okUpdatePost: "Publicación editada correctamente"
+    },
+
+    errorLikes: {
+        errorServerConnectionLikes: "Error al conectar con el servidor: ",
+        errorLike: "Error al procesar el LIKE: ",
+        okLike: "LIKE procesado correctamente"
+    },
+
+    errorComments: {
+        errorServerConnetionComments: "Error en la petición al servidor: ",
+        errorLoadingComments: "Error cargando los comentarios: ",
+        okCreateComment: "Comentario creado correctamente",
+        errorCreatingComment: "Error creando el comentario: "
+    },
+
+    errorChat: {
+        errorServerConnectionChat: "Error al conectar con el servidor: ",
+        errorReturnChat: "El chat devuelto no és válido: ",
+        errorFormatoInesperado: "Formato inesperado no correcto: ",
+        okLiveMessageReceived: "Mensaje en vivo recibido: ",
+        ignoredMessage: "Mensaje ignorado, ya existe en la lista",
+        renderedChat: "Chat renderizado",
+        errorConversacionesChat: "Respuesta inesperada del servidor: ",
+        errorReceivedListUsers: "Error al recibir la lista de usuarios: "
     }
 };
 

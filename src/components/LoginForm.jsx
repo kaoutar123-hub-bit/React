@@ -7,9 +7,10 @@ import { LanguageContext } from "../contexts/language.context.jsx";
 
 export default function LoginForm (props) {
 
-    const {user, setUser, login, error, setError} = useContext(UserContext);
-    const {translations, lang, setLang} = useContext(LanguageContext);
-    const language = lang.content.login;
+    const {user, setUser, login, error, setError, errorBackend} = useContext(UserContext);
+    const {lang} = useContext(LanguageContext);
+    const language = lang.login;
+    const translatedError = error ? lang.UserFunctions[error] : "";
 
 
     const handleUserEmail = (e) => {
@@ -32,7 +33,7 @@ export default function LoginForm (props) {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                {error && <p className="error">{error}</p>}
+                {translatedError && (<p className="error">{translatedError} {errorBackend}</p>)}
                 
                 <p className="pLogin">{language.logInMVMood}</p>
                 <input type="email" name="email" placeholder={language.email} className="imputs" value={user.email} onChange={handleUserEmail} required />

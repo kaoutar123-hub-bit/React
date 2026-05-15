@@ -49,7 +49,7 @@ export default function Header ({ children }) {
                 <div className={`${styles.dataLoggedContainer} dataLoggedContainer`}>
                         {/*<p>{localStorage.getItem("nickname")}</p>*/}
                         <Link className={styles.linkHeaderNickImg} to="/profile">
-                            <img src={user.foto_perfil ? `${API_URL}/storage/${user.foto_perfil}`: userPic}
+                            <img src={user.foto_perfil ? `${API_URL}/api/storage/${user.foto_perfil}`: userPic}
                                 alt="FotoPerfil"
                                 className={styles.headerProfileImg}
                             />

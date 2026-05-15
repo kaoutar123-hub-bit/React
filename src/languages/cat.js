@@ -1,9 +1,9 @@
 const cat = {
     login: {
-        logInMVMood: "Incia sesió a MVMood",
+        logInMVMood: "Incia sessió a MVMood",
         email: "email",
         password: "contrasenya",
-        logIn: "Iniciar sesió",
+        logIn: "Iniciar sessió",
         signUp: "Registra't",
         forgotPassword: "Has oblidat la constrasenya?"
     },
@@ -71,6 +71,7 @@ const cat = {
     },
 
     ProfilePage: {
+        errorServerConnectionProfile: "Error de conexió amb el servidor: ",
         settings: 'Configuració',
         profile_edit: 'Editar perfil',
         nickname: "Nom d'usuari",
@@ -86,7 +87,9 @@ const cat = {
         fill_all_fields: "S'han d'omplir tots el camps",
         password_mismatch: "Les contrasenyes no coincideixen",
         password_too_short: "Contrasenya massa curta",
-        password_updated: "Contrasenya actualitzada"
+        password_updated: "Contrasenya actualitzada",
+        errorDeleteUser: "Error al eliminar el compte: ",
+        okDeleteUser: "Compte eliminat correctament"
     },
 
     ChatPage: {
@@ -113,6 +116,58 @@ const cat = {
         english: "Anglès",
         spanish: "Castellà",
         catalan: "Català"
+    },
+
+    UserFunctions: {
+        errorServerConnection: "Error al conectar amb el servidor: ",
+        errorServerLogin: "Error del servidor al login: ",
+        okLogin: "Login correcte: ",
+        errorServerRegister: "Error en el registre: ",
+        okRegister: "Registre correcte",
+        errorServerResetPassword: "Error al actualitzar la contrasenya: ",
+        okResetPassword: "Contrasenya actualitzada correctament",
+        errorServerGetDataUserLogged: "Error al rebre dades d'usuari: ",
+        okGetDataUserLogged: "Dades d'usuario rebuts correctament",
+        errorServerUpdateNickname: "Error al rebre el Nickname actualitzat: ",
+        okUpdateNickname: "Nickname actualitzat correctament",
+        errorServerUpdatePassword: "Error al actualitzar la constrasenya: ",
+        okUpdatePassword: "Contrasenya actualitzada correctament"
+    },
+
+    errorPosts: {
+        errorServerConnectionPosts: "Error al conectar amb el servidor: ",
+        errorServerLoadPosts: "Error al carregar els POSTS: ",
+        okLoadPosts: "POSTS carregats correctament",
+        errorServerCreatePost: "Error a la creació del POST: ",
+        okCreatePost: "Publicació creada correctament",
+        errorServerDeletePost: "Error eliminant el POST: ",
+        okDeletePost: "Publicació eliminada correctament",
+        errorServerUpdatePost: "Error a la edició del POST: ",
+        okUpdatePost: "Publicaci editada correctament"
+    },
+
+    errorLikes: {
+        errorServerConnectionLikes: "Error al conectar amb el servidor: ",
+        errorLike: "Error al processar el LIKE: ",
+        okLike: "LIKE processat correctament"
+    },
+
+    errorComments: {
+        errorServerConnetionComments: "Error a la petici al servidor: ",
+        errorLoadingComments: "Error caregant les comentaris: ",
+        okCreateComment: "Comentari creat correctament",
+        errorCreatingComment: "Error creant el comentari: "
+    },
+
+    errorChat: {
+        errorServerConnectionChat: "Error al conectar amb el servidor: ",
+        errorReturnChat: "El chat retornat no és vàlid: ",
+        errorFormatoInesperado: "Format inesperat no correcte: ",
+        okLiveMessageReceived: "Missatge en viu rebut: ",
+        ignoredMessage: "Missatge ignorat, ya existeix a la llista",
+        renderedChat: "Chat actualitza´t",
+        errorConversacionesChat: "Resposta inesperada del servidor: ",
+        errorReceivedListUsers: "Error al rebre la llista d'usuaris: "
     }
 };
 

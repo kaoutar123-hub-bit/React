@@ -11,10 +11,10 @@ import { Link } from "react-router-dom";
 
 export default function Post({ post, updated, deleted, del, update, publicaciones, like, getComments, createComment }) {
     
-    const {translations, lang, setLang} = useContext(LanguageContext);
-    const {user} = useContext(UserContext);
-    const language = lang.content.Post;
     const API_URL = import.meta.env.VITE_API_URL;
+    const {translations, lang, setLang} = useContext(LanguageContext);
+    const {user, error} = useContext(UserContext);
+    const language = lang.Post;
 
     const [editPost, setEditPost] = useState(false);
     const [editPostContent, setEditPostContent] = useState(post.contenido);
@@ -27,7 +27,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
 
 
     // Guardar editar POST
-    const handleSave = async () => {
+    const handleSave = async (id) => {
 
         const formData = new FormData();
         formData.append("contenido", editPostContent);
@@ -72,7 +72,8 @@ export default function Post({ post, updated, deleted, del, update, publicacione
 
             if (next) {
                 getComments(post.id).then((response) => {
-                    if (!response?.error) {
+                    if (!response || !response?.error) {
+                        setCommentList([]);
                         setCommentList(response);
                     }
                 });
@@ -110,14 +111,14 @@ export default function Post({ post, updated, deleted, del, update, publicacione
     }
 
     return (
-        <>
+        <>            
             {editPost ? (
                 <div className='post-content'>
                     {/*<img src={`${API_URL}/storage/${post.imagen}`} />*/}
                     {urlImagen ?
                         <img src={urlImagen} alt="Url Imagen" className="attachUrlImagen" />
                     :
-                        post.imagen && <img src={`${API_URL}/storage/${post.imagen}`} alt="Post Imagen" />
+                        post.imagen && <img src={`${API_URL}/api/storage/${post.imagen}`} alt="Post Imagen" />
                     }
 
                     <textarea
@@ -134,7 +135,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
             ) : (
                 <div className="post-content">
                     <Link className={styles.linkPostNickImg} to="/profile">
-                        <img src={post.user.foto_perfil ? `${API_URL}/storage/${post.user.foto_perfil}`: userPic}
+                        <img src={post.user.foto_perfil ? `${API_URL}/api/storage/${post.user.foto_perfil}`: userPic}
                         alt="FotoPerfil"
                         className={styles.postProfileImg} />
 
@@ -143,7 +144,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
                     <p className={styles.postText}>{post.contenido}</p>
 
                     {post.imagen && (
-                        <img src={`${API_URL}/storage/${post.imagen}`} />
+                        <img src={`${API_URL}/api/storage/${post.imagen}`} />
                     )}
                 </div>
 
@@ -162,6 +163,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
 
             {showComments && (
                 <div className="comment-section">
+
                     <form onSubmit={handleComments}>
 
                         <textarea placeholder={language.type_message}
@@ -183,7 +185,7 @@ export default function Post({ post, updated, deleted, del, update, publicacione
                             commentList.map((comment) => (
                                 <div key={comment.uuid} className="comment-item">
                                     <div className='comment-nickname'>
-                                        <Link className={styles.linkPostNickImg} to="/profile"><img src={user.foto_perfil ? `${API_URL}/storage/${user.foto_perfil}`: userPic}
+                                        <Link className={styles.linkPostNickImg} to="/profile"><img src={user.foto_perfil ? `${API_URL}/api/storage/${user.foto_perfil}`: userPic}
                                             alt="FotoPerfil"
                                             className={styles.postProfileImg} />
                                         </Link>

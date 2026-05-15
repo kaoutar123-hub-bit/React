@@ -72,6 +72,7 @@ const en = {
     },
 
     ProfilePage: {
+        errorServerConnectionProfile: "Server connection error: ",
         settings: 'settings',
         profile_edit: "profile edit",
         nickname: "nickname",
@@ -87,7 +88,9 @@ const en = {
         fill_all_fields: "Fill all fields",
         password_mismatch: "Password mismatch",
         password_too_short: "Password too short",
-        password_updated: "Password updated"
+        password_updated: "Password updated",
+        errorDeleteUser: "Error when deleting account: ",
+        okDeleteUser: "Account successfuly deleted"
     },
 
     ChatPage: {
@@ -114,6 +117,58 @@ const en = {
         english: "English",
         spanish: "Spanish",
         catalan: "Catalan"
+    },
+
+    UserFunctions: {
+        errorServerConnection: "Error conecting to the server: ",
+        errorServerLogin: "Server login error: ",
+        okLogin: "Correct login: ",
+        errorServerRegister: "Error in registration: ",
+        okRegister: "Correct registration",
+        errorServerResetPassword: "Error updating password: ",
+        okResetPassword: "Password updated correctly",
+        errorServerGetDataUserLogged: "Error receiving user data: ",
+        okGetDataUserLogged: "User data received corectly",
+        errorServerUpdateNickname: "Error receiving updated nickname: ",
+        okUpdateNickname: "Nickname updated correctly",
+        errorServerUpdatePassword: "Error updating password: ",
+        okUpdatePassword: "Contraseña actualizada correctamente"
+    },
+
+    errorPosts: {
+        errorServerConnectionPosts: "Error conecting to the server: ",
+        errorServerLoadPosts: "Error loading POSTS: ",
+        okLoadPosts: "POSTS loaded correctly",
+        errorServerCreatePost: "Error in creating the POST: ",
+        okCreatePost: "POST created successfully",
+        errorServerDeletePost: "Error deleting the POST: ",
+        okDeletePost: "Post successfully deleted",
+        errorServerUpdatePost: "Error in POST editing: ",
+        okUpdatePost: "POST edited correctly"
+    },
+
+    errorLikes: {
+        errorServerConnectionLikes: "Error conecting to the server: ",
+        errorLike: "Error processing LIKE: ",
+        okLike: "LIKE processed correctly"
+    },
+
+    errorComments: {
+        errorServerConnetionComments: "Error conecting to the server: ",
+        errorLoadingComments: "Error loading comments: ",
+        okCreateComment: "Comment created successfully",
+        errorCreatingComment: "Error creating comment: "
+    },
+
+    errorChat: {
+        errorServerConnectionChat: "Error conecting to the server: ",
+        errorReturnChat: "The returned chat is invalid: ",
+        errorFormatoInesperado: "Unexpetec format no correct: ",
+        okLiveMessageReceived: "Live message received: ",
+        ignoredMessage: "Message ignored, already exist in the list",
+        renderedChat: "Rendered chat",
+        errorConversacionesChat: "Unexpeted server response: ",
+        errorReceivedListUsers: "Error receiving user list: "
     }
 };
 

@@ -7,8 +7,9 @@ export default function ChatUserList ({ currentUser, onSelectUser }) {
     const API_URL = import.meta.env.VITE_API_URL;
 
     const {translations, lang, setLang} = useContext(LanguageContext);
-    const language = lang.content.ChatUserList;
-
+    //const language = lang.content.ChatUserList;
+    const language = lang.errorChat;
+    
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -32,15 +33,15 @@ export default function ChatUserList ({ currentUser, onSelectUser }) {
 
             if (!response.ok) {
                 const errorResponse = data.message;
-                console.log(errorResponse);
-                throw new Error("Error al recibir la lista de usuarios: ", errorResponse);
-                console.error("Error al recibir la lista de usuarios: ", errorResponse);
+                console.error(`${language.errorReceivedListUsers} ${errorResponse}`);
+                throw new Error(`${language.errorReceivedListUsers} ${errorResponse}`);
+
                 //setError("Error al recibir la lista de usuarios: ", errorResponse);
             }
         
 
         } catch (err) {
-            console.error("Error al conectar con el servidor: ", err.message);
+            console.error(`${language.errorServerConnectionChat} ${err.message}`);
         }  
     }
 

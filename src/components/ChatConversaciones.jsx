@@ -8,7 +8,8 @@ export default function ChatConversaciones({ onSelectChat, currentUser }) {
     const API_URL = import.meta.env.VITE_API_URL;
 
     const {translations, lang, setLang} = useContext(LanguageContext);
-    const language = lang.content.ConversacionesChat;
+    //const language = lang.content.ConversacionesChat;
+    const language = lang.errorChat;
 
     const [chats, setChats] = useState([]);
     const [cargando, setCargando] = useState(true);
@@ -25,7 +26,7 @@ export default function ChatConversaciones({ onSelectChat, currentUser }) {
                 const data = await res.json();
                 //console.log("Respuesta Back: ", data);
                 if (!Array.isArray(data)) {
-                    console.error("Respuesta del inesperada del servidor: ", data);
+                    console.error(`${language.errorConversacionesChat} ${data}`);
                     setChats([]);
                     return;
                 }
@@ -34,7 +35,7 @@ export default function ChatConversaciones({ onSelectChat, currentUser }) {
                 //console.log("Chats recibidos: ", chats);
 
             } catch (err) {
-                console.error("Error al obtener chats:", err);
+                console.error(`${language.errorServerConnectionChat} ${err}`);
             } finally {
                 setCargando(false);
             }
@@ -65,7 +66,7 @@ export default function ChatConversaciones({ onSelectChat, currentUser }) {
                                 className="message-item"
                                 onClick={() => onSelectChat(chat)}
                             >
-                                <img src={receptor.foto_perfil ? `${import.meta.env.VITE_API_URL}/storage/${receptor.foto_perfil}` : "/images/user.png"} alt="avatar" className="message-avatar" />
+                                <img src={receptor.foto_perfil ? `${import.meta.env.VITE_API_URL}/api/storage/${receptor.foto_perfil}` : "/images/user.png"} alt="avatar" className="message-avatar" />
                                 <div className="message-info">
                                     {/*<h4>{chat.usuarios[0]?.nickname}</h4>*/}
                                     <h4>{receptor?.nickname}</h4>
