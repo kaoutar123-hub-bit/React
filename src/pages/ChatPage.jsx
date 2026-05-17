@@ -35,18 +35,17 @@ export default function ChatPage() {
                 },
                 body: JSON.stringify({
                     receptor_id: user.id,
-                    contenido: ""
+                    contenido: "Hola"
                 })
             });
 
             const data = await response.json();
             //console.log("Chat creado o existente: ", data);
 
-            if (data && data.id) {
-                setChatSeleccionado(data);
-            } else if (data.chat && data.chat.id) {
+            if (data.chat) {
                 setChatSeleccionado(data.chat);
-            } else {
+            }
+            else {
                 console.error(`${language.errorReturnChat} ${data}`);
             }
         
