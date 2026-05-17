@@ -42,10 +42,11 @@ export default function ChatPage() {
             const data = await response.json();
             //console.log("Chat creado o existente: ", data);
 
-            if (data.chat) {
+            if (data && data.id) {
+                setChatSeleccionado(data);
+            } else if (data.chat && data.chat.id) {
                 setChatSeleccionado(data.chat);
-            }
-            else {
+            } else {
                 console.error(`${language.errorReturnChat} ${data}`);
             }
         
