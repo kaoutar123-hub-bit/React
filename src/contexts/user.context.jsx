@@ -371,7 +371,7 @@ function UserProviderWrapper(props) {
     }, [token]);
     
     return (
-        <UserContext.Provider value={{ user, setUser, login, error, setError, errorBackend, signUp, resetPassword, message, token, getDataLoggedUser, updateNickname, updatePassword }}>
+        <UserContext.Provider value={{ user, setUser, login, error, setError, errorBackend, signUp, resetPassword, message, setMessage, token, getDataLoggedUser, updateNickname, updatePassword }}>
             {props.children}
         </UserContext.Provider>
     );
