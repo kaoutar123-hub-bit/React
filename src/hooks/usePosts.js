@@ -36,7 +36,7 @@ export function usePosts() {
             
             if (!response.ok) {
                 //throw new Error("No se pueden cargar las peticiones");
-                const errorResponse = data.message;
+                const errorResponse = result.message;
                 console.error(`${language.errorServerLoadPosts} ${errorResponse}`);
                 setError(`${language.errorServerLoadPosts} ${errorResponse}`);
 
